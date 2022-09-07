@@ -1,14 +1,7 @@
 import { useForm } from "react-hook-form";
-import { FilterParamsT, ExpertiseAreaT } from "../types";
+import { FilterParamsT } from "../types";
+import { fetcher } from "../utils";
 import { useQuery } from "@tanstack/react-query";
-import * as React from "react";
-
-const fetcher = async ({ areaOfExpertise, city, facility }: FilterParamsT) =>
-  await fetch(
-    `/api/doctors/?city=${city}&areaOfExpertise=${areaOfExpertise}&facility=${facility}`
-  )
-    .then((r) => r.json())
-    .catch((e) => console.error(e));
 
 //------------------------------------------------------------
 export const useFilter = () => {
@@ -17,7 +10,11 @@ export const useFilter = () => {
   const res = useQuery(
     ["search"],
     () => {
-      return fetcher(getValues());
+      const { city, facility, areaOfExpertise } = getValues();
+      return fetcher({
+        url: `/api/doctors/?city=${city}&areaOfExpertise=${areaOfExpertise}&facility=${facility}`,
+        method: "GET",
+      });
     },
     {
       enabled: false,
