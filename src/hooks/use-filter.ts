@@ -14,7 +14,6 @@ const fetcher = async ({ areaOfExpertise, city, facility }: FilterParamsT) =>
 export const useFilter = () => {
   const methods = useForm<FilterParamsT>();
   const { getValues } = methods;
-  const [enableFetching, setEnableFetching] = React.useState(false);
   const res = useQuery(
     ["search"],
     () => {
