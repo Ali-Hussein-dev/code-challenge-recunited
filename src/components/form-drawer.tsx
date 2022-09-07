@@ -92,7 +92,8 @@ export function FormDrawer({
                     <span className="label-text">{item.label}</span>
                     <input
                       type="radio"
-                      className="radio checked:bg-emerald-400 "
+                      className="radio checked:bg-emerald-400"
+                      value={item.value}
                       {...register("areaOfExpertise", { required: true })}
                     />
                   </label>
