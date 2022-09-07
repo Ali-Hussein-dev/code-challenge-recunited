@@ -9,10 +9,9 @@ const Home: NextPage = () => {
   const {
     methods,
     onSubmit,
-    res: { data, status },
+    res: { data },
   } = filterObj;
-  const { handleSubmit, register } = methods;
-  console.log(data);
+  const { handleSubmit, register, watch } = methods;
   return (
     <>
       <Head>
@@ -34,12 +33,16 @@ const Home: NextPage = () => {
                 />
                 <FilterDrawer />
               </div>
-              <button type="submit" className="btn btn-success text-white">
+              <button
+                disabled={!watch("city")}
+                type="submit"
+                className="btn  btn-success text-white"
+              >
                 submit
               </button>
             </form>
+            <SearchResults list={data?.list || []} />
           </FormProvider>
-          <SearchResults list={data?.list || []} />
         </section>
       </main>
     </>
