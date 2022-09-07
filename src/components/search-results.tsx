@@ -1,9 +1,12 @@
 import * as React from "react";
 import { DoctorT } from "../types";
+import { useDelete } from "../hooks";
 import { FormDrawer } from "./form-drawer";
 
 const Card = (props: DoctorT) => {
-  const { firstName, areaOfExpertise, email, lastName, facility, city } = props;
+  const { id, firstName, areaOfExpertise, email, lastName, facility, city } =
+    props;
+  const { mutate } = useDelete(id);
   return (
     <div className="w-full px-3 py-4 rounded bg-base-200 text-neutral shadow-none ">
       <div className="space-y-3">
@@ -23,7 +26,13 @@ const Card = (props: DoctorT) => {
         </div>
 
         <div className="row-end gap-x-3">
-          <button type="button" className="btn btn-outline btn-sm btn-error">
+          <button
+            onClick={() => {
+              mutate();
+            }}
+            type="button"
+            className="btn btn-outline btn-sm btn-error"
+          >
             Delete
           </button>
           <FormDrawer type="modify" defaultValues={{ ...props }} />
