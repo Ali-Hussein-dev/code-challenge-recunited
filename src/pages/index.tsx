@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   const {
     methods,
     onSubmit,
-    res: { data, refetch },
+    res: { data, refetch, fetchStatus },
   } = filterObj;
   const { handleSubmit, register, watch } = methods;
   return (
@@ -27,7 +27,7 @@ const Home: NextPage = () => {
               <div className="input-group">
                 <input
                   type="text"
-                  placeholder="City"
+                  placeholder="City e.g Hamburg or Berlin"
                   className="input w-full"
                   {...register("city", { required: true })}
                 />
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
                 type="submit"
                 className="btn  btn-success text-white"
               >
-                submit
+                {fetchStatus == "fetching" ? "searching..." : "search"}
               </button>
             </form>
             <SearchProv state={{ refreshResults: refetch }}>
@@ -46,6 +46,7 @@ const Home: NextPage = () => {
             </SearchProv>
           </FormProvider>
         </section>
+        {fetchStatus}
       </main>
     </>
   );
