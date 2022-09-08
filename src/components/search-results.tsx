@@ -3,7 +3,8 @@ import { DoctorT } from "../types";
 import { useDelete } from "../hooks";
 import { FormDrawer } from "./form-drawer";
 
-const Card = (props: DoctorT) => {
+type CardPropsT = DoctorT;
+const Card = (props: CardPropsT) => {
   const { id, firstName, areaOfExpertise, email, lastName, facility, city } =
     props;
   const { mutate } = useDelete(id);
@@ -19,7 +20,7 @@ const Card = (props: DoctorT) => {
             <span className="text-gray-500">{city}</span>
           </div>
           <div className="col-start mt-2">
-            <a></a>
+            {/* // todo add proper element for email */}
             <span className="">{email}</span>
             <span className="">{facility}</span>
           </div>
@@ -28,7 +29,13 @@ const Card = (props: DoctorT) => {
         <div className="row-end gap-x-3">
           <button
             onClick={() => {
-              mutate();
+              const confirm = prompt("Type DELETE to confirm deletion");
+              if (confirm === "DELETE") {
+                mutate();
+                console.info("deletion is confirmed with", confirm);
+              } else {
+                console.info("deletion wasn't confirmed", confirm);
+              }
             }}
             type="button"
             className="btn btn-outline btn-sm btn-error"
