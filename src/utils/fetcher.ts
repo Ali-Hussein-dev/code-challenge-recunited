@@ -1,4 +1,3 @@
-
 export type fetchParams = {
   url: string;
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
