@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { FilterDrawer, SearchResults } from "../components";
-import { useFilter } from "../hooks";
+import { SearchProv, useFilter } from "../hooks";
 import { FormProvider } from "react-hook-form";
-
+import * as React from "react";
 const Home: NextPage = () => {
   const filterObj = useFilter();
   const {
     methods,
     onSubmit,
-    res: { data },
+    res: { data, refetch },
   } = filterObj;
   const { handleSubmit, register, watch } = methods;
   return (
@@ -41,7 +41,9 @@ const Home: NextPage = () => {
                 submit
               </button>
             </form>
-            <SearchResults list={data?.list || []} />
+            <SearchProv state={{ refreshResults: refetch }}>
+              <SearchResults list={data?.list || []} />
+            </SearchProv>
           </FormProvider>
         </section>
       </main>
