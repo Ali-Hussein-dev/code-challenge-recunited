@@ -17,18 +17,18 @@ const Home: NextPage = () => {
       <Head>
         <title>Doctors </title>
       </Head>
-      <main className="min-h-screen  place-items-start grid py-10 ">
+      <main className="grid min-h-screen py-10 place-items-start ">
         <section className="mx-auto space-y-5 bg-base-300 py-10 px-4 rounded-xl shadow-xl max-w-[550px] w-full">
           <FormProvider {...methods}>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="form-control space-y-3"
+              className="space-y-3 form-control"
             >
               <div className="input-group">
                 <input
                   type="text"
                   placeholder="City e.g Hamburg or Berlin"
-                  className="input w-full"
+                  className="w-full input"
                   {...register("city", { required: true })}
                 />
                 <FilterDrawer />
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
               <button
                 disabled={!watch("city")}
                 type="submit"
-                className="btn  btn-success text-white"
+                className="btn text-white btn-success"
               >
                 {fetchStatus == "fetching" ? "searching..." : "search"}
               </button>
@@ -46,7 +46,6 @@ const Home: NextPage = () => {
             </SearchProv>
           </FormProvider>
         </section>
-        {fetchStatus}
       </main>
     </>
   );
