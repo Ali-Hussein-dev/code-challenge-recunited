@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nc from "next-connect";
 import { DoctorT, FilterParamsT } from "../../../types";
-import { filterDoctors } from "../../../utils";
 import { faunaQuery } from "../../../db/fauna";
 import { Doctor } from "../../../db/doctors";
 
@@ -16,21 +15,14 @@ const searchHandler = nc<NextApiRequest, NextApiResponse>()
     } as FilterParamsT;
 
     const dbRes = await faunaQuery<{ data: { data: DoctorT }[] }>(
-      await Doctor.docotors_by(params.city),
+      await Doctor.docotors_by(params),
       {
         debugInfo: `get docotor with ${req.url} failed`,
       }
     );
-    if (!dbRes?.data) {
-      res.status(500).json({ status: "error" });
-    }
-    const doctors_by_city = dbRes?.data.map((doc) => doc?.data);
+    const doctors_by = dbRes?.data.map((doc) => doc?.data);
 
-    let filteredList = doctors_by_city;
-    if (doctors_by_city && (params.areaOfExpertise || params.facility)) {
-      filteredList = filterDoctors(params, doctors_by_city);
-    }
-    res.status(200).json({ list: filteredList, status: "success" });
+    res.status(200).json({ list: doctors_by, status: "success" });
   })
   //------------------------------------------------------------
   .post(async (req, res) => {

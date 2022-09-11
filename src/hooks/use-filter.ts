@@ -12,7 +12,9 @@ export const useFilter = () => {
     () => {
       const { city, facility, areaOfExpertise } = getValues();
       return fetcher({
-        url: `/api/doctors/?city=${city}&areaOfExpertise=${areaOfExpertise}&facility=${facility}`,
+        url: `/api/doctors/?city=${city}&areaOfExpertise=${
+          areaOfExpertise || ""
+        }&facility=${facility || ""}`,
         method: "GET",
       });
     },
